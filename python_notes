@@ -22,9 +22,41 @@ https://conda.io/docs/user-guide/install/windows.html
 python
 
 #Variables
+#integers
 x=2;
+#floating points
+y = 2.2;
+#In Python these interchange pretty well
+x+y
+
+
+#string
 str = 'The quick brown fox jumps over the lazy log';
+str[0]
+str[1]
+str[0:8]
+
+#array
 arr = [0,1,2,3,4]
+twodarr = [arr, arr, arr, arr]
+twodarr[1]
+twodarr[1][1] #row 1 column 1
+##This is unwieldly so if you want R data.frame like objects us Pandas in Python
+
+#tuple
+tup = (0,1,2,3)
+tup_b = ('the', 'quick', 'brown', 'fox')
+
+#dictionaries/Hash tables
+translation = {'one': 1, 'two': 2}
+translation['one']
+
+#Accessing hashes
+for key, value in translation.items():
+    print(key, '->', value)
+
+
+
 
 #Operations
 y=x**2 ##should operate on x and return the square of x
@@ -71,11 +103,23 @@ list2 = [1,2,'var',4,'odd'] #mix variable types for some reason
 list3 = range(2,20)
 list4 = range(2,20,2)
 
-#Loops
 
+#######################################################
+###Loops: Repeat a process
+
+##Structure of a loop
+
+#Example
 arr = range(10)
 for i in arr:
     print(i**3);
+
+
+
+
+#######################################################
+#modules and 'import'
+import random
 
 bases=["A","C","G","T"]
 #join
@@ -84,8 +128,7 @@ bases=["A","C","G","T"]
 '_'.join(bases)
 "\t".join(bases)
 
-#modules and 'import'
-import random
+
 random.choice(bases)
 
 n=1999;
@@ -100,12 +143,58 @@ for i in range(0,n):
 seq = ''.join(random.choice(bases) for _ in range(n))
 
 
-#Regular Expressions: How to search strings in Python
 
-m=re.findall("TAC",seq)
-len(m) #the number of matches to CCG in seq
+
+
+#####################################################
+#Regular Expressions: How to search strings in Python
+import re; ##Import the re library
+m=re.findall("TTT",seq)
+len(m) #the number of matches to TTT in seq
 
 #re.sub(pattern, replace, string)
+
+##read text file
+with open ("./data/98.txt", "r") as myfile:
+    data=myfile.read()
+
+it=re.findall("It", data)
+itwas=re.findall("It was", data)
+itwasthe=re.findall("It was the ", data)
+itwasthebest=re.findall("It was the best", data)
+
+##Challenge:
+#How many words are there in this file?
+
+#How many lines?
+
+#How many chapters?
+
+
+#For object seq
+#find all start codons AUC
+#substitute T to U
+transl = re.sub('T', 'U', seq)
+#find AUC
+startc = re.findall("AUC", transl)
+
+#get position of first match
+m = re.search("AUC", transl);
+m.span(); #will give start and end of first match..
+
+#get position of all matches
+m2 = re.finditer("AUC", transl) #returns an iterator object, must loop
+for n in m2:
+    print(n.span())
+    print(transl[n.span()])
+
+
+#######################################################
+##Functions in Python
+#
+
+
+
 
 
 

@@ -1,0 +1,234 @@
+---
+title: "Introduction to Python Programming for Bioinformatics"
+author: "Rob Harbert"
+date: "4/27/2018"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+library(reticulate)
+use_python('/usr/bin/python')
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Python Workshop
+
+This is part of the AMNH Sackler Institute for Comparative Genomics workshop series
+
+This workshop will cover:
+
+* Insalling and running Python and Anaconda for package management
+* Data and variable types and structures
+* Reading and writing common file types (e.g., csv)
+* Basic programming in Python through interactive and scripted sessions
+* Using some common libraries in Bioinformatics
+
+# To install Python
+MacOS
+https://conda.io/docs/user-guide/install/macos.html
+
+Windows
+https://conda.io/docs/user-guide/install/windows.html
+
+
+# Python Variables
+
+Much like R, Python has distinct integer and numeric classes. In Python these are:
+
+### Integers
+
+```{python}
+x=2
+
+print(x)
+
+
+print(type(x))
+````
+
+### Floating Points Numbers
+
+```{python}
+y=2.2
+
+print(y)
+
+print(type(y))
+````
+
+In Python integers and floating points interface pretty well
+```{python}
+z = x*y
+
+print(z)
+
+type(z)
+```
+
+### Character Strings
+
+Text is stored in the string variable type. Each character is indexed in an ordered list.
+
+```{python}
+str = 'The quick brown fox jumps over the lazy log';
+print(str[0])
+print(str[1])
+print(str[0:8])
+
+```
+
+### Explicit variable calling
+
+```{python}
+n = float(1)
+print(n)
+print(type(n))
+```
+
+
+### Array
+
+Stores multiple data objects of type integer, float, or string. Can be mixed. Denoted by brackets "[]"
+
+```{python}
+arr = [0,1,2,3,4]
+print(arr)
+arr2 = [0, 1, "two", "three", 4.4]
+print(arr2)
+
+#values can be changed
+arr[0] = 2
+
+```
+
+Arrays can be arrays of arrays, which is kind of like a data.frame or matrix.
+
+```{python}
+twodarr = [arr, arr, arr, arr]
+print(twodarr[1])
+print(twodarr[1][1]) #row 1 column 1
+```
+
+This is funky so if you want R data.frame like objects us Pandas in Python. http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html
+
+
+### Tuples
+
+Imutable array-like objects. Denoted by parentheses insead of brackets. Try setting a value in an existing tuple.
+
+```{python}
+tup = (0,1,2,3)
+print(tup)
+print(tup[0])
+
+tup_b = ('the', 'quick', 'brown', 'fox')
+print(tup_b)
+print(tup_b[3])
+
+
+
+```
+
+What happens if we try and set a value in a tuple?
+
+### Dictionaries
+
+These are lists of key/value pairs. In Perl these are Hash objects. R does not have an equivalent to this but it is kind of like row/column names. The key is set to look-up the values. These can be useful for translation, or information lookup (e.g., zipcodes)
+
+```{python}
+translation = {'one': 1, 'two': 2}
+print(translation['one'])
+
+#Values can also be set
+translation['one'] = 5
+print(translation['one'])
+
+#Keys are added like:
+translation['five'] = 1
+print(translation['five'])
+
+#Values can be anything
+translation['six'] = [0,1,2,3,4]
+print(translation['six'])
+```
+
+
+
+# Operators
+
+### Math
+
+Mostly like R.
+
+```{python}
+print(x+7)
+print(x*2)
+print(x**3)
+
+
+```
+
+
+
+### Logic
+
+```{python}
+print(x==y)
+print(x>y)
+print(x<=y)
+
+```
+
+### Operators on strings 
+
+"+" concatenates strings. 
+"==" compares exact string identity 
+Other operations don't behave like you might expect. ">" and "<" perform byte comparisons of the character codes and are usually not useful.
+
+```{python}
+str1 = "hello"
+str2 = "world"
+print(str1+str2)
+print(str1+" "+str2+"!")
+
+print(str1==str2)
+print(str1=='hello')
+print(str1>str2)
+print(str2>str1)
+
+```
+
+# Loops and Python functions
+
+### Functions
+
+We have already seen a few functions. For example print(). All functions have the same format: name ( object )
+
+Some useful functions:
+Range - cast a sequence of numbers from i to n by x
+```{python}
+r=range(0,10,1)
+print(r)
+r2=range(0,20,2)
+print(r2)
+```
+
+Join - Concatenate strings b
+```{python}
+bases=["A","C","G","T"]
+#join
+print(''.join(bases))
+print(' '.join(bases))
+print('_'.join(bases))
+print("\t".join(bases))
+print(' '.join(str1))
+```
+
+Length - get length of array or string
+```{python}
+print(len(str1))
+print(len(arr))
+```
+
