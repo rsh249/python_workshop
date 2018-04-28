@@ -3,8 +3,8 @@ title: "Introduction to Python Programming for Bioinformatics"
 author: "Rob Harbert"
 date: "4/27/2018"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -160,12 +160,13 @@ print(translation['six'])
 
 ### Math
 
-Mostly like R.
+Mostly like R. But compare "**" and "^". In python "^" is a bitwise operator (bit "OR") which we will ignore for now.
 
 ```{python}
 print(x+7)
 print(x*2)
 print(x**3)
+print(x^3)
 
 
 ```
@@ -200,7 +201,7 @@ print(str2>str1)
 
 ```
 
-# Loops and Python functions
+# Python Functions, Libraries, and Loops
 
 ### Functions
 
@@ -228,7 +229,46 @@ print(' '.join(str1))
 
 Length - get length of array or string
 ```{python}
-print(len(str1))
+print(len(str))
 print(len(arr))
+```
+
+
+###Libraries
+
+Like R, the power of python comes from code libraries. Libraries are called bye the 'import' statement and libraries can be aliased using "import lib as alias".
+
+```{python}
+import random
+print(random.choice(bases))
+print(random.choice(bases))
+
+import random as r
+print(r.choice(bases))
+
+```
+
+
+### Loops
+
+"For" loops are programming structures that are useful for repeating things. There are often better, more efficient ways to do this like the "apply" family of functions in R. For now we will stick with basic for loops because they are highly useful.
+
+```{python}
+for i in [1,2,3,4]:
+  print(i)
+```
+
+Random character strings
+
+```{python}
+import random as r
+
+n=1999
+seq=range(n)
+for i in seq:
+  seq[i] = r.choice(bases)
+  
+seqstr=''.join(seq)
+print(seqstr[1:50])
 ```
 
