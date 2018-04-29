@@ -1,0 +1,60 @@
+---
+title: "NCBI Web-scraping"
+author: "Rob Harbert"
+date: "5/9/2018"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+use_python('/usr/bin/python')
+```
+
+# Scripting in Python
+
+Interactive Python is great but you want to put your workflow in scripts so it is easy to reproduce. The basic format is below. Copy and paste it into a text file.
+
+```{python, eval=FALSE}
+#!/usr/bin/python
+str='hello world'
+print(str)
+quit() #Can skip this, will exit at end of file
+```
+
+### Accepting command line input
+
+```{python, eval=FALSE}
+#!/usr/bin/python
+import sys
+print sys.argv[0]
+print sys.argv[1]
+print len(sys.argv)
+quit() 
+```
+
+Then run: "python script.py 'in string'"
+
+We can expand on this and do something with the command line input.
+
+```{python, eval=FALSE}
+#!/usr/bin/python
+import sys
+str=sys.argv[1]
+l=len(str)
+for i in range(l,0,-1):
+  print str[i]
+  
+quit() 
+```
+
+
+# NCBI Entrez
+
+
+
+# Biopython
+
+```{python}

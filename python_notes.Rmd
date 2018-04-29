@@ -158,6 +158,8 @@ print(translation['six'])
 
 # Operators
 
+Tutorial: https://www.programiz.com/python-programming/operators
+
 ### Math
 
 Mostly like R. But compare "**" and "^". In python "^" is a bitwise operator (bit "OR") which we will ignore for now.
@@ -170,8 +172,6 @@ print(x^3)
 
 
 ```
-
-
 
 ### Logic
 
@@ -214,6 +214,8 @@ r=range(0,10,1)
 print(r)
 r2=range(0,20,2)
 print(r2)
+r3=range(10,0,-1)
+print(r3)
 ```
 
 Join - Concatenate strings b
@@ -233,8 +235,14 @@ print(len(str))
 print(len(arr))
 ```
 
+###Libraries/Import
 
-###Libraries
+```{r fig.width=4, fig.align='center', echo=FALSE}
+library(png)
+library(grid)
+img <- readPNG("./docs/xkcd.png")
+ grid.raster(img)
+```
 
 Like R, the power of python comes from code libraries. Libraries are called bye the 'import' statement and libraries can be aliased using "import lib as alias".
 
@@ -248,7 +256,6 @@ print(r.choice(bases))
 
 ```
 
-
 ### Loops
 
 "For" loops are programming structures that are useful for repeating things. There are often better, more efficient ways to do this like the "apply" family of functions in R. For now we will stick with basic for loops because they are highly useful.
@@ -258,6 +265,14 @@ for i in [1,2,3,4]:
   print(i)
 ```
 
+Instead of declaring the list of values to iterate through we could also call range and give the number:
+
+```{python}
+for i in range(10):
+  print(i**3)
+  
+```
+
 Random character strings
 
 ```{python}
@@ -265,6 +280,7 @@ import random as r
 
 n=1999
 seq=range(n)
+
 for i in seq:
   seq[i] = r.choice(bases)
   
@@ -272,3 +288,105 @@ seqstr=''.join(seq)
 print(seqstr[1:50])
 ```
 
+# String matching with Regular Expressions
+
+### The 're' library
+
+```{python}
+import re
+m=re.findall("TTT",seqstr[0:100])
+print(m)
+print(len(m)) #the number of matches to TTT in seq
+#re.sub(pattern, replace, string)
+
+s=re.sub('A', 'N', seqstr)
+print(s[0:50])
+```
+
+### Reading and parsing text files
+
+To open text files we want to open a filehandle (a variable pointing to a file to read) with the open function. 'with open("file.txt") as filehandle:' is a statement that reads Open file.txt and refer to it with the variable filehandle and then do (":") something. In the case below we will just read the whole file into a character string or into an array of character strings.
+
+```{python}
+##read text file
+with open ("./data/98.txt", "r") as myfile:
+    data=myfile.read()
+print(data[0])
+
+
+#Try also:
+
+with open ("./data/98.txt", "r") as myfile:
+    data2=myfile.readlines()
+
+
+print(data2[0])
+```
+
+With the file read into a single character string we will use 're' to parse the text in any way you might use 'grep'.
+
+```{python}
+lines=re.findall("\n", data)
+print(len(lines)) 
+
+it=re.findall("It", data)
+itwas=re.findall("It was", data)
+itwasthe=re.findall("It was the ", data)
+itwasthebest=re.findall("It was the best", data)
+
+
+
+```
+
+### Challenge:
+
+* How many words are there in this file?
+* How many lines?
+* How many chapters?
+
+### Searching Nucleotide strings
+For object seqstr, find all start codons AUG.
+
+```{python}
+transl = re.sub('T', 'U', seqstr)
+
+startc = re.findall("AUG", transl)
+
+#get position of first match, use 'search' instead of 'findall'.
+m = re.search("AUG", transl)
+first = m.span()
+print(first) #will give start and end of first match..
+
+#get position of all matches
+m2 = re.finditer("AUG", transl) #returns an iterator object, must loop
+for n in m2:
+    coord=n.span()
+    print(coord[0])
+    print(transl[coord[0]:coord[0]+20])
+    
+    
+
+
+```
+
+### Challenge
+
+What would we need to get all possible open reading frames and return those as an array?
+
+How could we use a Python dictionary object to translate these ORFs.
+
+# Reading CSV files to Pandas 
+
+**How to install pandas**
+
+"conda install pandas"
+
+# Writing Python Functions
+
+
+```{python}
+def add(x, y):
+  return x + y
+  
+add(1,4)
+```

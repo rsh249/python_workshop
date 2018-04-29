@@ -172,7 +172,7 @@ itwasthebest=re.findall("It was the best", data)
 
 
 #For object seq
-#find all start codons AUC
+#find all start codons AUG
 #substitute T to U
 transl = re.sub('T', 'U', seq)
 #find AUC
@@ -183,7 +183,7 @@ m = re.search("AUC", transl);
 m.span(); #will give start and end of first match..
 
 #get position of all matches
-m2 = re.finditer("AUC", transl) #returns an iterator object, must loop
+m2 = re.finditer("AUG", transl) #returns an iterator object, must loop
 for n in m2:
     print(n.span())
     print(transl[n.span()])
