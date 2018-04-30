@@ -288,6 +288,37 @@ seqstr=''.join(seq)
 print(seqstr[1:50])
 ```
 
+
+
+# Writing Python Functions
+
+
+```{python}
+def add(x, y):
+  return x + y
+  
+add(1,4)
+```
+
+Write a function to generate a random DNA or RNA sequence of length 'n'.
+
+```{python}
+def nullDNA(n):
+  bases = ['A','C','G','T']
+  import random
+  seq=range(n)
+  for i in seq:
+    seq[i] = random.choice(bases)
+  
+  return(''.join(seq))
+  
+
+seqstr = nullDNA(40)
+print(seqstr)
+  
+  
+```
+
 # String matching with Regular Expressions
 
 ### The 're' library
@@ -302,6 +333,7 @@ print(len(m)) #the number of matches to TTT in seq
 s=re.sub('A', 'N', seqstr)
 print(s[0:50])
 ```
+
 
 ### Reading and parsing text files
 
@@ -375,18 +407,9 @@ What would we need to get all possible open reading frames and return those as a
 
 How could we use a Python dictionary object to translate these ORFs.
 
-# Reading CSV files to Pandas 
+## Reading CSV files to Pandas 
 
 **How to install pandas**
 
 "conda install pandas"
 
-# Writing Python Functions
-
-
-```{python}
-def add(x, y):
-  return x + y
-  
-add(1,4)
-```
