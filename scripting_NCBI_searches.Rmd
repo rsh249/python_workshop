@@ -1,5 +1,5 @@
 ---
-title: "NCBI Web-scraping"
+title: "Scripting NCBI Web-scraping"
 author: "Rob Harbert"
 date: "5/9/2018"
 output:
@@ -37,7 +37,7 @@ quit()
 
 Then run: "python script.py 'in string'"
 
-We can expand on this and do something with the command line input.
+We can expand on this and do something with the command line input. Like print it in reverse order.
 
 ```{python, eval=FALSE}
 #!/usr/bin/python
@@ -53,7 +53,7 @@ quit()
 
 # NCBI Entrez
 
-
+**conda install Biopython**
 
 # Biopython
 

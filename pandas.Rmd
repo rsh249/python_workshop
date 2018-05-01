@@ -1,0 +1,81 @@
+---
+title: "Pandas"
+author: "Rob Harbert"
+date: "5/9/2018"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+library(reticulate)
+knitr::opts_chunk$set(echo = TRUE)
+
+
+```
+
+## Reading CSV files to Pandas and plotting with matplotlib
+
+Pandas tutorial: http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html 
+And: http://nbviewer.jupyter.org/urls/bitbucket.org/hrojas/learn-pandas/raw/master/lessons/02%20-%20Lesson.ipynb 
+
+**Install pandas**
+"conda install pandas"
+
+**Install matplotlib**
+"conda install matplotlib"
+
+```{python}
+import pandas
+import matplotlib.pyplot as plt
+
+df=pandas.read_csv('./data/mtcars.csv')
+print(df)
+```
+
+### 'Head'
+
+```{python}
+print(df.head(5))
+
+```
+
+### Row and column print methods
+```{python}
+print(df.mpg)
+print( df.iloc[[0]] )     #iloc is a function that slices rows by index
+print(df.iloc[1:4])
+
+```
+
+## Plot with matplotlib
+
+```{python}
+df.plot.scatter(x='cyl', y='mpg')
+plt.show()
+```
+
+### Color points by vehicle weight
+
+```{python}
+df.plot.scatter(x='cyl', y='mpg', c='wt')
+plt.show()
+
+```
+
+### Histograms
+
+```{python}
+df.hist(column='mpg')
+plt.show()
+```
+
+### Make things appear more 'ggplot' like
+
+```{python}
+plt.style.use('ggplot')       # Use ggplot style plots*
+df.hist(column='mpg')
+plt.show()
+
+```
+

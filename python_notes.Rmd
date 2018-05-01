@@ -1,10 +1,10 @@
 ---
 title: "Introduction to Python Programming for Bioinformatics"
 author: "Rob Harbert"
-date: "4/27/2018"
+date: "5/9/2018"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +23,7 @@ This workshop will cover:
 * Data and variable types and structures
 * Reading and writing common file types (e.g., csv)
 * Basic programming in Python through interactive and scripted sessions
-* Using some common libraries in Bioinformatics
+* Using some common libraries for Bioinformatics
 
 # To install Python
 MacOS
@@ -111,8 +111,7 @@ print(twodarr[1])
 print(twodarr[1][1]) #row 1 column 1
 ```
 
-This is funky so if you want R data.frame like objects us Pandas in Python. http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html
-
+This is funky so if you want R data.frame like objects us Pandas in Python. http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html. 
 
 ### Tuples
 
@@ -162,7 +161,7 @@ Tutorial: https://www.programiz.com/python-programming/operators
 
 ### Math
 
-Mostly like R. But compare "**" and "^". In python "^" is a bitwise operator (bit "OR") which we will ignore for now.
+Mostly like R. But compare "**" and "\^". In python "\^" is a bitwise operator (bit "OR") which we will ignore for now.
 
 ```{python}
 print(x+7)
@@ -380,6 +379,8 @@ itwasthebest=re.findall("It was the best", data)
 For object seqstr, find all start codons AUG.
 
 ```{python}
+seqstr = nullDNA(80)
+
 transl = re.sub('T', 'U', seqstr)
 
 startc = re.findall("AUG", transl)
@@ -389,7 +390,7 @@ m = re.search("AUG", transl)
 first = m.span()
 print(first) #will give start and end of first match..
 
-#get position of all matches
+#get position of *all* matches
 m2 = re.finditer("AUG", transl) #returns an iterator object, must loop
 for n in m2:
     coord=n.span()
@@ -407,9 +408,5 @@ What would we need to get all possible open reading frames and return those as a
 
 How could we use a Python dictionary object to translate these ORFs.
 
-## Reading CSV files to Pandas 
 
-**How to install pandas**
-
-"conda install pandas"
 
