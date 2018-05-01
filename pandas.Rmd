@@ -1,5 +1,5 @@
 ---
-title: "Pandas"
+title: "Pandas DataVis"
 author: "Rob Harbert"
 date: "5/9/2018"
 output:
@@ -10,14 +10,15 @@ output:
 ```{r setup, include=FALSE}
 library(reticulate)
 knitr::opts_chunk$set(echo = TRUE)
-
-
 ```
 
 ## Reading CSV files to Pandas and plotting with matplotlib
 
 Pandas tutorial: http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html 
 And: http://nbviewer.jupyter.org/urls/bitbucket.org/hrojas/learn-pandas/raw/master/lessons/02%20-%20Lesson.ipynb 
+
+Cheatsheet: https://github.com/rsh249/python_workshop/quick_guides/Pandas_Cheat_Sheet.pdf
+
 
 **Install pandas**
 "conda install pandas"
@@ -46,6 +47,29 @@ print(df.mpg)
 print( df.iloc[[0]] )     #iloc is a function that slices rows by index
 print(df.iloc[1:4])
 
+```
+
+## Sort
+```{python}
+
+mpgsort = df.sort_values('mpg')
+print(mpgsort)
+```
+
+```{python}
+#Note that the index (row number) on the data frame is scrambled. To return to original order:
+print(mpgsort.sort_index())
+```
+
+```{python}
+#OR to keep this order but reset the index for index referencing:
+print(mpgsort.reset_index())    #Note that this adds a column 'index' that contains the old index
+```
+
+
+## Sample
+```{python}
+print(df.sample(n=5))
 ```
 
 ## Plot with matplotlib

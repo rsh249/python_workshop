@@ -3,14 +3,14 @@ title: "Scripting NCBI Web-scraping"
 author: "Rob Harbert"
 date: "5/9/2018"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(reticulate)
-use_python('/usr/bin/python')
+use_python('/usr/local/bin/python')
 ```
 
 # Scripting in Python
@@ -29,9 +29,9 @@ quit() #Can skip this, will exit at end of file
 ```{python, eval=FALSE}
 #!/usr/bin/python
 import sys
-print sys.argv[0]
-print sys.argv[1]
-print len(sys.argv)
+print(sys.argv[0])
+print(sys.argv[1])
+print(len(sys.argv))
 quit() 
 ```
 
@@ -45,7 +45,7 @@ import sys
 str=sys.argv[1]
 l=len(str)
 for i in range(l,0,-1):
-  print str[i]
+  print(str[i])
   
 quit() 
 ```
@@ -53,8 +53,118 @@ quit()
 
 # NCBI Entrez
 
-**conda install Biopython**
+conda install Bio
 
-# Biopython
+# Biopython and Entrez search tools
+
+Biopython is a big project from which we will use the submodule Entrez which provides tools for searching NCBI databases and the submodule SeqIO for switching between sequence file types.
+
+Take a look at the databases we can access:
 
 ```{python}
+from Bio import Entrez
+from Bio import SeqIO
+
+Entrez.email='your@email.com'
+
+handle = Entrez.einfo()
+record = Entrez.read(handle)
+print(record["DbList"])
+
+```
+
+For the search string check on the NCBI website search first.
+
+https://www.ncbi.nlm.nih.gov/nucleotide/
+
+Look at the search details box to the right after entering a search term.
+
+Let's put the next few code chunks into a script that accepts a search string as sys.argv[0] and passes it to the Entrez.esearch function.
+
+Tutorial:http://biopython.org/DIST/docs/api/Bio.Entrez-module.html 
+
+```{python}
+
+from Bio import Entrez
+from Bio import SeqIO
+
+Entrez.email='your@email.com'
+#search Genbank, returns accession numbers (up to 100)
+handle=Entrez.esearch(db='nucleotide', retmax=3, term="rbcl[All Fields]", idtype="acc") 
+record = Entrez.read(handle)
+print(handle)
+print(record)
+handle.close()
+
+
+fetch = Entrez.efetch(db='nucleotide', id=",".join(record['IdList']), rettype='gb', retmode='text')
+gb=fetch.read()
+print(gb[0:1000])
+
+```
+
+Note that Entrez.efetch() has a limit of 200 records. So you may have to put this in a loop. You can check this as below:
+
+```{python}
+print(record['Count'])
+```
+
+Now let's use SeqIO to switch from the Genbank file format to fasta
+
+```{python}
+
+target = open('./data/seqs.gb', 'w')     #Open file seqs.gb for writing
+target.write(gb)
+target.close()
+count = SeqIO.convert("./data/seqs.gb", "genbank", "./data/seqs.fasta", "fasta")    #convert file seqs.gb to seqs.fasta
+print("Converted %i records to fasta" % count)
+```
+
+### Pubmed
+```{python}
+
+from Bio import Entrez
+from Bio import SeqIO
+
+Entrez.email='your@email.com'
+handle=Entrez.esearch(db='pubmed', retmax=3, term="rbcl", retmode='xml') 
+record = Entrez.read(handle)
+handle.close()
+
+print(record)
+
+handle = Entrez.efetch(db="pubmed", id=record['IdList'])
+xml=handle.read()
+print(xml[0:2000])
+handle = Entrez.efetch(db="pubmed", id=record['IdList'], rettype="gb", retmode="xml")
+record = Entrez.read(handle)
+title=list()
+for i in range(len(record)+1):
+  print(record['PubmedArticle'][i]['MedlineCitation']['Article']['ArticleTitle'])
+
+
+```
+### Challenge: Link multiple sequence alignment to sequence harvesting in your Genbank script.
+
+Align with mafft. Note that Biopython supports several multiple sequence alignment tools (Clustal, Mafft, ).
+
+For install of mafft see: https://mafft.cbrc.jp/alignment/software/source.html
+
+
+```{python, eval=FALSE}
+from Bio.Align.Applications import MafftCommandline
+in_file = "./data/seqs.fasta"
+mafft_cline = MafftCommandline(input=in_file) ## can add extra mafft commands here MafftCommandline(input=in_file, 'args')
+print(mafft_cline)
+
+stdout, stderr = mafft_cline() #Catch the output of mafft going to stdout and stderr 
+with open("aligned.fasta", "w") as handle:
+    handle.write(stdout)  #write stdout to file
+
+
+print(stdout)
+
+```
+
+
+
