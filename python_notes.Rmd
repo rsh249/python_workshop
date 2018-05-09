@@ -38,7 +38,7 @@ print(y)
 print(type(y))
 ````
 
-In Python integers and floating points interface pretty well
+In Python integer and floating point types interface pretty well
 ```{python}
 z = x*y
 
@@ -68,9 +68,11 @@ print(type(n))
 ```
 
 
-### Array
+### Array/List
 
 Stores multiple data objects of type integer, float, or string. Can be mixed. Denoted by brackets "[]"
+
+Note: These objects are like R lists, not vectors. Variable type can vary within these.
 
 ```{python}
 arr = [0,1,2,3,4]
@@ -91,7 +93,9 @@ print(twodarr[1])
 print(twodarr[1][1]) #row 1 column 1
 ```
 
-This is funky so if you want R data.frame like objects us Pandas in Python. http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html. 
+This is funky so if you want R data.frame like objects use Pandas. Next section.
+
+http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html
 
 ### Tuples
 
@@ -164,7 +168,9 @@ print(x<=y)
 ### Operators on strings 
 
 "+" concatenates strings. 
-"==" compares exact string identity 
+
+"==" compares exact string identity. 
+
 Other operations don't behave like you might expect. ">" and "<" perform byte comparisons of the character codes and are usually not useful.
 
 ```{python}
@@ -419,7 +425,7 @@ for n in m2:
 
 What would we need to get all possible open reading frames and return those as an array?
 
-How could we use a Python dictionary object to translate these ORFs.
+How could we use a Python dictionary object to translate these ORFs?
 
 
 

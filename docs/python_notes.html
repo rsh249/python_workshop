@@ -143,7 +143,7 @@ print(y)</code></pre>
 <pre><code>## 2.2</code></pre>
 <pre class="python"><code>print(type(y))</code></pre>
 <pre><code>## &lt;type 'float'&gt;</code></pre>
-<p>In Python integers and floating points interface pretty well</p>
+<p>In Python integer and floating point types interface pretty well</p>
 <pre class="python"><code>z = x*y
 print(z)</code></pre>
 <pre><code>## 4.4</code></pre>
@@ -168,9 +168,10 @@ print(n)</code></pre>
 <pre class="python"><code>print(type(n))</code></pre>
 <pre><code>## &lt;type 'float'&gt;</code></pre>
 </div>
-<div id="array" class="section level3">
-<h3>Array</h3>
+<div id="arraylist" class="section level3">
+<h3>Array/List</h3>
 <p>Stores multiple data objects of type integer, float, or string. Can be mixed. Denoted by brackets “[]”</p>
+<p>Note: These objects are like R lists, not vectors. Variable type can vary within these.</p>
 <pre class="python"><code>arr = [0,1,2,3,4]
 print(arr)</code></pre>
 <pre><code>## [0, 1, 2, 3, 4]</code></pre>
@@ -185,7 +186,8 @@ print(twodarr[1])</code></pre>
 <pre><code>## [2, 1, 2, 3, 4]</code></pre>
 <pre class="python"><code>print(twodarr[1][1]) #row 1 column 1</code></pre>
 <pre><code>## 1</code></pre>
-<p>This is funky so if you want R data.frame like objects us Pandas in Python. <a href="http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html" class="uri">http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html</a>.</p>
+<p>This is funky so if you want R data.frame like objects use Pandas. Next section.</p>
+<p><a href="http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html" class="uri">http://pandas.pydata.org/pandas-docs/version/0.15/tutorials.html</a></p>
 </div>
 <div id="tuples" class="section level3">
 <h3>Tuples</h3>
@@ -248,7 +250,9 @@ print(translation['six'])</code></pre>
 </div>
 <div id="operators-on-strings" class="section level3">
 <h3>Operators on strings</h3>
-<p>“+” concatenates strings. “==” compares exact string identity Other operations don’t behave like you might expect. “&gt;” and “&lt;” perform byte comparisons of the character codes and are usually not useful.</p>
+<p>“+” concatenates strings.</p>
+<p>“==” compares exact string identity.</p>
+<p>Other operations don’t behave like you might expect. “&gt;” and “&lt;” perform byte comparisons of the character codes and are usually not useful.</p>
 <pre class="python"><code>str1 = &quot;hello&quot;
 str2 = &quot;world&quot;
 print(str1+str2)</code></pre>
@@ -307,10 +311,10 @@ print(''.join(bases))</code></pre>
 print(random.choice(bases))</code></pre>
 <pre><code>## G</code></pre>
 <pre class="python"><code>print(random.choice(bases))</code></pre>
-<pre><code>## T</code></pre>
+<pre><code>## G</code></pre>
 <pre class="python"><code>import random as r
 print(r.choice(bases))</code></pre>
-<pre><code>## C</code></pre>
+<pre><code>## G</code></pre>
 </div>
 <div id="loops" class="section level3">
 <h3>Loops</h3>
@@ -344,7 +348,7 @@ for i in seq:
   
 seqstr=''.join(seq)
 print(seqstr[1:50])</code></pre>
-<pre><code>## AGGACGCTCTACCAGTCGCGCACCAATAAGCTACGGTTTTGGACAAATA</code></pre>
+<pre><code>## TCCTCTGGGTAAGTAGTTACAGGACGGTTGTCTTCAGAAGTCGCGATCT</code></pre>
 </div>
 </div>
 <div id="writing-python-functions" class="section level1">
@@ -367,7 +371,7 @@ square(1234)</code></pre>
 seqstr = nullDNA(40)
 print(seqstr)
   </code></pre>
-<pre><code>## CGCCGGACGAGAGATCATAGCTAGTTCTAGTGTAAGGATG</code></pre>
+<pre><code>## GAAGGTTTTAAGGTGAGCCCGCAACCGATTGAGGGACTCT</code></pre>
 <p>Instead of loops, simple functions like our square function- go nicely into ‘map’ structures. This is A LOT like the apply family of functions in R. Mapping a function works well when there are few arguments and the repetition is simple (e.g., repeat 50 times).</p>
 <pre class="python"><code>ret=map(square, range(50))
 print(ret)</code></pre>
@@ -379,14 +383,14 @@ start_time = timeit.default_timer()
 ret=map(square, inputs)
 elapsed1 = timeit.default_timer() - start_time
 print(elapsed1)</code></pre>
-<pre><code>## 0.1521089077</code></pre>
+<pre><code>## 0.159844875336</code></pre>
 <pre class="python"><code>start_time = timeit.default_timer()
 ret2 = range(len(inputs))
 for i in range(len(inputs)):
   ret2[i] = square(inputs[i])
 elapsed2 = timeit.default_timer() - start_time
 print(elapsed2)</code></pre>
-<pre><code>## 0.286211013794</code></pre>
+<pre><code>## 0.289505958557</code></pre>
 </div>
 <div id="string-matching-with-regular-expressions" class="section level1">
 <h1>String matching with Regular Expressions</h1>
@@ -395,13 +399,13 @@ print(elapsed2)</code></pre>
 <pre class="python"><code>import re
 m=re.findall(&quot;TTT&quot;,seqstr[0:100])
 print(m)</code></pre>
-<pre><code>## []</code></pre>
+<pre><code>## ['TTT']</code></pre>
 <pre class="python"><code>print(len(m)) #the number of matches to TTT in seq
 #re.sub(pattern, replace, string)</code></pre>
-<pre><code>## 0</code></pre>
+<pre><code>## 1</code></pre>
 <pre class="python"><code>s=re.sub('A', 'N', seqstr)
 print(s[0:50])</code></pre>
-<pre><code>## CGCCGGNCGNGNGNTCNTNGCTNGTTCTNGTGTNNGGNTG</code></pre>
+<pre><code>## GNNGGTTTTNNGGTGNGCCCGCNNCCGNTTGNGGGNCTCT</code></pre>
 </div>
 <div id="reading-and-parsing-text-files" class="section level3">
 <h3>Reading and parsing text files</h3>
@@ -444,7 +448,7 @@ m = re.search(&quot;AUG&quot;, transl)
 first = m.span()
 print(first) #will give start and end of first match..
 #get position of *all* matches</code></pre>
-<pre><code>## (25, 28)</code></pre>
+<pre><code>## (49, 52)</code></pre>
 <pre class="python"><code>m2 = re.finditer(&quot;AUG&quot;, transl) #returns an iterator object, must loop
 for n in m2:
     coord=n.span()
@@ -452,15 +456,15 @@ for n in m2:
     print(transl[coord[0]:coord[0]+20]) #Print match plus 20 characters
     
     </code></pre>
-<pre><code>## 25
-## AUGCAUCUACGACUUAUGCG
-## 40
-## AUGCGACAGGGCCUGCACGC</code></pre>
+<pre><code>## 49
+## AUGCGCUGGGGUGCGACAUA
+## 70
+## AUGAAAAUUG</code></pre>
 </div>
 <div id="challenge-1" class="section level3">
 <h3>Challenge</h3>
 <p>What would we need to get all possible open reading frames and return those as an array?</p>
-<p>How could we use a Python dictionary object to translate these ORFs.</p>
+<p>How could we use a Python dictionary object to translate these ORFs?</p>
 </div>
 </div>
 
