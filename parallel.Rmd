@@ -1,0 +1,93 @@
+---
+title: "Parallel processing in R"
+author: "Rob Harbert"
+date: "5/9/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(reticulate)
+use_python('/usr/bin/python')
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Going parallel
+
+There are many Python code modules that implement or support parallel processing. A basic understanding of how these work will help with troubleshooting and development.
+
+Wiki: https://wiki.python.org/moin/ParallelProcessing
+
+### multiprocessing
+
+There are many tools in the multiprocessing library that help, here is a simple implementation to get us started.
+
+Resources:
+https://pythonhosted.org/joblib/parallel.html
+https://docs.python.org/2/library/multiprocessing.html
+
+
+```{python, eval = FALSE}
+
+from multiprocessing import Pool
+
+def f(x):
+    return x**2
+
+
+pool = Pool(processes=4)              # start a pool of 4 worker processes
+results = pool.map(f,range(100))        
+pool.close()
+
+print(results)
+
+## We need a non-trivial function to see this in action:
+#Prime number filter
+def test_prime(n):
+    if (n==1):
+        return
+    elif (n==2):
+        return n;
+    else:
+        for x in range(2,n):
+            if(n % x==0):
+                return 
+        return n 
+    
+    
+pool = Pool(processes=4)              # start a pool of 4 worker processes
+results = pool.map(test_prime,range(10000))        
+pool.close()
+
+#Get only the non-empty values
+results = [x for x in results if x != None]
+
+```
+
+### Measure improvement
+
+```{python, eval =FALSE}
+import timeit
+inputs = range(10000)
+start_time = timeit.default_timer()
+results = range(len(inputs))
+for i in range(len(inputs)):
+  results[i] = test_prime(inputs[i])
+
+results = [x for x in results if x != None]
+elapsed1 = timeit.default_timer() - start_time
+print(elapsed1)
+
+start_time = timeit.default_timer()
+pool = Pool(processes=4)              # start a pool of 4 worker processes
+results = pool.map(test_prime,range(10000))        
+pool.close()
+
+#Get only the non-empty values
+results = [x for x in results if x != None]
+elapsed2 = timeit.default_timer() - start_time
+print(elapsed2)
+
+
+
+```

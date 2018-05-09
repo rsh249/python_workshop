@@ -13,26 +13,6 @@ use_python('/usr/bin/python')
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Python Workshop
-
-This is part of the AMNH Sackler Institute for Comparative Genomics workshop series
-
-This workshop will cover:
-
-* Insalling and running Python and Anaconda for package management
-* Data and variable types and structures
-* Reading and writing common file types (e.g., csv)
-* Basic programming in Python through interactive and scripted sessions
-* Using some common libraries for Bioinformatics
-
-# To install Python
-MacOS
-https://conda.io/docs/user-guide/install/macos.html
-
-Windows
-https://conda.io/docs/user-guide/install/windows.html
-
-
 # Python Variables
 
 Much like R, Python has distinct integer and numeric classes. In Python these are:
@@ -48,7 +28,7 @@ print(x)
 print(type(x))
 ````
 
-### Floating Points Numbers
+### Floating Point Numbers
 
 ```{python}
 y=2.2
@@ -234,6 +214,8 @@ print(len(str))
 print(len(arr))
 ```
 
+
+
 ###Libraries/Import
 
 ```{r fig.width=4, fig.align='center', echo=FALSE}
@@ -291,15 +273,17 @@ print(seqstr[1:50])
 
 # Writing Python Functions
 
-
+Use 'def' to define a function named 'square'
 ```{python}
-def add(x, y):
-  return x + y
+def square(x):
+  return x**2
   
-add(1,4)
+square(1234)
+
 ```
 
-Write a function to generate a random DNA or RNA sequence of length 'n'.
+
+Write a function to generate a random DNA or RNA sequence of length 'n'. We will use a for loop here for simplicity.
 
 ```{python}
 def nullDNA(n):
@@ -314,9 +298,38 @@ def nullDNA(n):
 
 seqstr = nullDNA(40)
 print(seqstr)
-  
+
   
 ```
+
+Instead of loops, simple functions like our square function- go nicely into 'map' structures. This is A LOT like the apply family of functions in R. Mapping a function works well when there are few arguments and the repetition is simple (e.g., repeat 50 times).
+
+```{python}
+ret=map(square, range(50))
+print(ret)
+```
+
+Mapping should speed up execution over a for loop. Let's see how ours does.
+
+```{python}
+import timeit # Time handling functions
+inputs = range(1000000)
+start_time = timeit.default_timer()
+ret=map(square, inputs)
+elapsed1 = timeit.default_timer() - start_time
+print(elapsed1)
+
+start_time = timeit.default_timer()
+ret2 = range(len(inputs))
+for i in range(len(inputs)):
+  ret2[i] = square(inputs[i])
+
+
+elapsed2 = timeit.default_timer() - start_time
+print(elapsed2)
+
+```
+
 
 # String matching with Regular Expressions
 
@@ -395,7 +408,7 @@ m2 = re.finditer("AUG", transl) #returns an iterator object, must loop
 for n in m2:
     coord=n.span()
     print(coord[0])
-    print(transl[coord[0]:coord[0]+20])
+    print(transl[coord[0]:coord[0]+20]) #Print match plus 20 characters
     
     
 

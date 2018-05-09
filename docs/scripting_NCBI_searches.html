@@ -181,37 +181,35 @@ record = Entrez.read(handle)
 print(handle)</code></pre>
 <pre><code>## &lt;_io.TextIOWrapper encoding='utf-8'&gt;</code></pre>
 <pre class="python"><code>print(record)</code></pre>
-<pre><code>## {'Count': '263526', 'RetMax': '3', 'RetStart': '0', 'IdList': ['NZ_PGDQ01000004.1', 'NZ_CP020470.1', 'MF417801.1'], 'TranslationSet': [], 'TranslationStack': [{'Term': 'rbcl[All Fields]', 'Field': 'All Fields', 'Count': '263526', 'Explode': 'N'}, 'GROUP'], 'QueryTranslation': 'rbcl[All Fields]'}</code></pre>
+<pre><code>## {'Count': '263906', 'RetMax': '3', 'RetStart': '0', 'IdList': ['NATU01000384.1', 'NATW01000126.1', 'NATT01000272.1'], 'TranslationSet': [], 'TranslationStack': [{'Term': 'rbcl[All Fields]', 'Field': 'All Fields', 'Count': '263906', 'Explode': 'N'}, 'GROUP'], 'QueryTranslation': 'rbcl[All Fields]'}</code></pre>
 <pre class="python"><code>handle.close()
 fetch = Entrez.efetch(db='nucleotide', id=&quot;,&quot;.join(record['IdList']), rettype='gb', retmode='text')
 gb=fetch.read()
 print(gb[0:1000])</code></pre>
-<pre><code>## LOCUS       NZ_PGDQ01000004       451018 bp    DNA     linear   CON 28-APR-2018
-## DEFINITION  Euzebya sp. DSW09 Scaffold4, whole genome shotgun sequence.
-## ACCESSION   NZ_PGDQ01000004 NZ_PGDQ00000000
-## VERSION     NZ_PGDQ01000004.1
-## DBLINK      BioProject: PRJNA224116
-##             BioSample: SAMN07980965
-##             Assembly: GCF_003073135.1
-## KEYWORDS    WGS; RefSeq.
-## SOURCE      Euzebya sp. DSW09
-##   ORGANISM  Euzebya sp. DSW09
-##             Bacteria; Actinobacteria; Nitriliruptoria; Euzebyales.
-## REFERENCE   1  (bases 1 to 451018)
-##   AUTHORS   Yin,Q.
-##   TITLE     Euzebya salmonis sp. nov., a second member of genus Euzebya sp., an
-##             algicidal rare actinobacterium, isolated from East Sea surface
-##             seawater, China
+<pre><code>## LOCUS       NATU01000384           20221 bp    DNA     linear   ENV 03-MAY-2018
+## DEFINITION  Gamma proteobacterium symbiont of Ctena orbiculata isolate 40D _2,
+##             whole genome shotgun sequence.
+## ACCESSION   NATU01000384 NATU01000000
+## VERSION     NATU01000384.1
+## DBLINK      BioProject: PRJNA377790
+##             BioSample: SAMN06473048
+## KEYWORDS    WGS.
+## SOURCE      gamma proteobacterium symbiont of Ctena orbiculata (mollusc
+##             metagenome)
+##   ORGANISM  gamma proteobacterium symbiont of Ctena orbiculata
+##             Bacteria; Proteobacteria; Gammaproteobacteria.
+## REFERENCE   1  (bases 1 to 20221)
+##   AUTHORS   Lim,J.S., Engel,A.S., Anderson,L.C. and Campbell,B.J.
+##   TITLE     Taxonomic and genetic symbiont diversity in the seagrass-associated
+##             lucinid bivalves Ctena orbiculata and Stewartia floridana
 ##   JOURNAL   Unpublished
-## REFERENCE   2  (bases 1 to 451018)
-##   AUTHORS   Yin,Q.
+## REFERENCE   2  (bases 1 to 20221)
+##   AUTHORS   Lim,J.S., Engel,A.S., Anderson,L.C. and Campbell,B.J.
 ##   TITLE     Direct Submission
-##   JOURNAL   Submitted (07-NOV-2017) College of Life Sciences and Oceanography,
-##             Shenzhen University, 3688 Nanhai Avenue, Shenzhen 518060, China
-## COMMENT</code></pre>
+##   JOURNAL   Submitted</code></pre>
 <p>Note that Entrez.efetch() has a limit of 200 records. So you may have to put this in a loop. You can check this as below:</p>
 <pre class="python"><code>print(record['Count'])</code></pre>
-<pre><code>## 263526</code></pre>
+<pre><code>## 263906</code></pre>
 <p>Now let’s use SeqIO to switch from the Genbank file format to fasta</p>
 <pre class="python"><code>target = open('./data/seqs.gb', 'w')     #Open file seqs.gb for writing
 target.write(gb)
@@ -228,101 +226,72 @@ handle=Entrez.esearch(db='pubmed', retmax=3, term=&quot;rbcl&quot;, retmode='xml
 record = Entrez.read(handle)
 handle.close()
 print(record)</code></pre>
-<pre><code>## {'Count': '2228', 'RetMax': '3', 'RetStart': '0', 'IdList': ['29678645', '29674926', '29665488'], 'TranslationSet': [], 'TranslationStack': [{'Term': 'rbcl[All Fields]', 'Field': 'All Fields', 'Count': '2228', 'Explode': 'N'}, 'GROUP'], 'QueryTranslation': 'rbcl[All Fields]'}</code></pre>
+<pre><code>## {'Count': '2233', 'RetMax': '3', 'RetStart': '0', 'IdList': ['29733977', '29726460', '29723647'], 'TranslationSet': [], 'TranslationStack': [{'Term': 'rbcl[All Fields]', 'Field': 'All Fields', 'Count': '2233', 'Explode': 'N'}, 'GROUP'], 'QueryTranslation': 'rbcl[All Fields]'}</code></pre>
 <pre class="python"><code>handle = Entrez.efetch(db=&quot;pubmed&quot;, id=record['IdList'])
 xml=handle.read()
 print(xml[0:2000])</code></pre>
 <pre><code>## 
 ## Pubmed-entry ::= {
-##   pmid 29678645,
+##   pmid 29733977,
 ##   medent {
 ##     em std {
 ##       year 2018,
-##       month 4,
-##       day 22,
+##       month 5,
+##       day 8,
 ##       hour 6,
 ##       minute 0
 ##     },
 ##     cit {
 ##       title {
-##         name &quot;Gene tree discordance and coalescent methods support ancient
-##  intergeneric hybridisation between Dasymaschalon and Friesodielsia
-##  (Annonaceae).&quot;
+##         name &quot;First insights on the biogeographical history of Phlegmariurus
+##  (Lycopodiaceae), with a focus on Madagascar.&quot;
 ##       },
 ##       authors {
 ##         names std {
 ##           {
-##             name ml &quot;Guo X&quot;,
-##             affil str &quot;School of Biological Sciences, The University of Hong
-##  Kong, Hong Kong, China.&quot;
+##             name ml &quot;Bauret L&quot;,
+##             affil str &quot;Museum national d'Histoire naturelle, Sorbonne
+##  Universites, Institut de Systematique, Evolution, Biodiversite (UMR 7205
+##  CNRS, MNHN, UPMC, EPHE), Herbier national, 16 rue Buffon CP39, F-75005 Paris,
+##  France; Universite Pierre et Marie Curie, Sorbonne Universites, Institut de
+##  Systematique, Evolution, Biodiversite (UMR 7205 CNRS, MNHN, UPMC, EPHE), 57
+##  rue Cuvier CP48, F-75005 Paris, France. Electronic address:
+##  lu.bauret@gmail.com.&quot;
 ##           },
 ##           {
-##             name ml &quot;Thomas DC&quot;,
-##             affil str &quot;School of Biological Sciences, The University of Hong
-##  Kong, Hong Kong, China; Singapore Botanic Gardens, 1 Cluny Road, Singapore
-##  259569, Singapore.&quot;
+##             name ml &quot;Field AR&quot;,
+##             affil str &quot;Queensland Herbarium, Department of Environment and
+##  Science; Australian Tropical Herbarium, James Cook University, POBox 6811,
+##  Cairns, Qld 4878, Australia.&quot;
 ##           },
 ##           {
-##             name ml &quot;Saunders RMK&quot;,
-##             affil str &quot;School of Biological Sciences, The University of Hong
-##  Kong, Hong Kong, China. Electronic address: saunders@hku.hk.&quot;
-##           }
-##         }
-##       },
-##       from journal {
-##         title {
-##           iso-jta &quot;Mol. Phylogenet. Evol.&quot;,
-##           ml-jta &quot;Mol Phylogenet Evol&quot;,
-##           issn &quot;1095-9513&quot;,
-##           name &quot;Molecular phylogenetics and evolution&quot;
-##         },
-##         imp {
-##           date std {
-##             year 2018,
-##             month 4,
-##             day 17
+##             name ml &quot;Gaudeul M&quot;,
+##             affil str &quot;Museum national d'Histoire naturelle, Sorbonne
+##  Universites, Institut de Systematique, Evolution, Biodiversite (UMR 7205
+##  CNRS, MNHN, UPMC, EPHE), Herbier national, 16 rue Buffon CP39, F-75005 Paris,
+##  France.&quot;
 ##           },
-##           language &quot;eng&quot;,
-##           pubstatus aheadofprint,
-##           history {
-##             {
-##               pubstatus received,
-##               date std {
-##                 year 2017,
-##                 month 5,
-##                 day 4
-##               }
-##             },
-##             {
-##               pubstatus revised,
-##               date std {
-##                 year 2018,
-##                 month 3,
-##                 day 23
-##               }
-##             },
-##             {
-##               pubstatus accepted,
-##               date std {
-##                 year 2018,
-##                 month 4,
-##                 day 9
-##               }
-##             },
-##             {
-##               pubstatus other,
-##               date std {
-## </code></pre>
+##           {
+##             name ml &quot;Selosse MA&quot;,
+##             affil str &quot;Museum national d'Histoire naturelle, Sorbonne
+##  Universites, Institut de Systematique, Evolution, Biodiversite (UMR 7205
+##  CNRS, MNHN, UPMC, EPHE), Herbier national, 16 rue Buffon CP39, F-75005 Paris,
+##  France; Department of Plant Taxonomy and Nature Conservation, University of
+##  Gdansk, ul. Wita Stwosza 59, 80-308 Gdansk, Poland.&quot;
+##           },
+##           {
+##             name ml &quot;Rouhan G&quot;,
+##             affil str &quot;Museum national d'Histoire naturelle, Sorbonne
+##  Universites, Institut de Systematique, Evolution, Biodiversite (UMR 7205
+##  CNRS, MNHN, UPM</code></pre>
 <pre class="python"><code>handle = Entrez.efetch(db=&quot;pubmed&quot;, id=record['IdList'], rettype=&quot;gb&quot;, retmode=&quot;xml&quot;)
 record = Entrez.read(handle)
 title=list()
 for i in range(len(record)+1):
   print(record['PubmedArticle'][i]['MedlineCitation']['Article']['ArticleTitle'])</code></pre>
-<pre><code>## Gene tree discordance and coalescent methods support ancient intergeneric hybridisation between Dasymaschalon and Friesodielsia (Annonaceae).
-## Quercus langbianensis complex based on morphology and DNA barcodes of classic and next generation sequences.
-## Antioxidative enzymes and expression of rbcL gene as tools to monitor heavy metal-related stress in plants.</code></pre>
-<pre class="python"><code>print(title)</code></pre>
-<pre><code>## []</code></pre>
+<pre><code>## First insights on the biogeographical history of Phlegmariurus (Lycopodiaceae), with a focus on Madagascar.
+## 3, a new polymorph of rubidium copper trichloride: synthesis, structure and structural complexity.
+## Origins of East Asian Campanuloideae (Campanulaceae) diversity.</code></pre>
 </div>
 <div id="challenge-link-multiple-sequence-alignment-to-sequence-harvesting-in-your-genbank-script." class="section level3">
 <h3>Challenge: Link multiple sequence alignment to sequence harvesting in your Genbank script.</h3>
@@ -336,6 +305,10 @@ stdout, stderr = mafft_cline() #Catch the output of mafft going to stdout and st
 with open(&quot;aligned.fasta&quot;, &quot;w&quot;) as handle:
     handle.write(stdout)  #write stdout to file
 print(stdout)</code></pre>
+</div>
+<div id="follow-up" class="section level3">
+<h3>Follow up</h3>
+<p>I recommend looking the following for phylogenetic analyses in Python: <a href="http://dendropy.org/news.html" class="uri">http://dendropy.org/news.html</a></p>
 </div>
 </div>
 

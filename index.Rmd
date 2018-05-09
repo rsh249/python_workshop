@@ -1,0 +1,46 @@
+---
+title: "SICG Python Workshop"
+author: "Rob Harbert"
+date: "5/9/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(reticulate)
+use_python('/usr/bin/python')
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Python Workshop
+
+This is part of the AMNH Sackler Institute for Comparative Genomics workshop series
+
+This workshop will cover:
+
+* Insalling and running Python and Anaconda for package management
+* Data and variable types and structures
+* Reading and writing common file types (e.g., csv)
+* Basic programming in Python through interactive and scripted sessions
+* Using some common libraries for Bioinformatics
+
+# To install Python
+MacOS
+https://conda.io/docs/user-guide/install/macos.html
+
+Windows
+https://conda.io/docs/user-guide/install/windows.html
+
+
+# Links:
+
+Intro to Python: https://rsh249.github.io/python_workshop/python_notes.html
+Pandas and matplotlib: https://github.com/rsh249/python_workshop/pandas.html
+Biopython, NCBI, and Python scripting:
+https://github.com/rsh249/python_workshop/scripting_NCBI_searches.html
+Going Parallel: https://github.com/rsh249/python_workshop/parallel.html
+
+
+
+
+

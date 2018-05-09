@@ -166,5 +166,8 @@ print(stdout)
 
 ```
 
+### Follow up
 
+I recommend looking the following for phylogenetic analyses in Python: 
+http://dendropy.org/news.html 
 
